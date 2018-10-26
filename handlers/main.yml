@@ -1,0 +1,21 @@
+---
+# handlers file for aws-codedeploy-agent
+- name: start codedeploy-agent
+  service:
+    name: codedeploy-agent
+    state: started
+
+- name: stop codedeploy-agent
+  service:
+    name: codedeploy-agent
+    state: stopped
+
+- name: restart codedeploy-agent
+  service:
+    name: codedeploy-agent
+    state: restarted
+
+- name: reload codedeploy-agent
+  service:
+    name: codedeploy-agent
+    state: reloaded

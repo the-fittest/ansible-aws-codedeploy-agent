@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Alexander Jaeger
+  description: your description
+  company: Brandfrisch
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        # 18.04
+        - bionic
+  galaxy_tags: []
+dependencies: []

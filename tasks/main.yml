@@ -1,0 +1,57 @@
+---
+# tasks file for aws-codedeploy-agent
+
+- name: Install dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ codedeploy_packages }}"
+
+- name: Checkout Repository
+  git:
+    dest: /opt/codedeploy-agent
+    repo: https://github.com/aws/aws-codedeploy-agent.git
+    clone: true
+    version: "{{ codedeploy_version }}"
+
+- name: Bundle install
+  bundler:
+    gemfile: /opt/codedeploy-agent/Gemfile
+    state: present
+
+- name: Build AWS CodeDeploy Agent
+  shell: "/usr/bin/rake clean && /usr/bin/rake"
+  args:
+    chdir: /opt/codedeploy-agent
+    creates: /opt/codedeploy-agent/deployment
+
+- name: Create config folder
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  with_items:
+    - '/var/log/aws/codedeploy-agent'
+    - '/etc/codedeploy-agent/conf'
+
+- name: Build AWS CodeDeploy Agent
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: 'codedeploy-agent.service.j2', dest: '/etc/systemd/system/codedeploy-agent.service' }
+    - { src: 'codedeployagent.yml.j2', dest: '/etc/codedeploy-agent/conf/codedeployagent.yml' }
+  notify:
+    - "restart codedeploy-agent"
+
+- name: Start AWS CodeDeploy Agent
+  service:
+    name: codedeploy-agent
+    enabled: true
+    state: started

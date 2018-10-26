@@ -1,0 +1,6 @@
+---
+# default file for aws-codedeploy-agent
+service:
+  codedeploy-agent:
+    enabled: true
+    running: true
