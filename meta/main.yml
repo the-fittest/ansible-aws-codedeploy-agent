@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Alexander Jaeger
-  description: your description
+  description: Installing AWS CodeDeploy Agent
   company: Brandfrisch
   license: MIT
   min_ansible_version: 2.4

@@ -4,6 +4,4 @@
 codedeploy_packages:
   - git
   - ruby
-  - ruby-bundler
-
-codedeploy_version: v1.0-1518
+  - cron

@@ -8,23 +8,18 @@
   with_items:
     - "{{ codedeploy_packages }}"
 
-- name: Checkout Repository
-  git:
-    dest: /opt/codedeploy-agent
-    repo: https://github.com/aws/aws-codedeploy-agent.git
-    clone: true
-    version: "{{ codedeploy_version }}"
+- name: Download aws-codedeploy-install script
+  get_url:
+    url: https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
+    dest: /usr/local/src/aws-codedeploy-install
+    mode: 0750
+    owner: root
+    group: root
 
-- name: Bundle install
-  bundler:
-    gemfile: /opt/codedeploy-agent/Gemfile
-    state: present
-
-- name: Build AWS CodeDeploy Agent
-  shell: "/usr/bin/rake clean && /usr/bin/rake"
+- name: Execute codedeploy install
+  command: /usr/local/src/aws-codedeploy-install auto
   args:
-    chdir: /opt/codedeploy-agent
-    creates: /opt/codedeploy-agent/deployment
+    creates: /opt/codedeploy-agent/bin/codedeploy-agent
 
 - name: Create config folder
   file:
