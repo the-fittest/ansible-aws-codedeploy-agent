@@ -10,7 +10,7 @@
 
 - name: Download aws-codedeploy-install script
   get_url:
-    url: https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
+    url: https://aws-codedeploy-eu-central-1.s3.amazonaws.com/latest/install
     dest: /usr/local/src/aws-codedeploy-install
     mode: 0750
     owner: root
@@ -50,3 +50,4 @@
     name: codedeploy-agent
     enabled: true
     state: started
+  become: true
