@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: docker:stable
-    working_directory: ~/aws-codedeploy-agent
+    working_directory: ~/ansible-aws-codedeploy-agent
 
     steps:
 
@@ -12,7 +12,7 @@ jobs:
           docker_layer_caching: true
 
       - checkout:
-          path: ~/aws-codedeploy-agent
+          path: ~/ansible-aws-codedeploy-agent
 
       - run:
           name: "Install pip"
@@ -51,12 +51,12 @@ jobs:
     docker:
       - image: circleci/node:8
 
-    working_directory: ~/aws-codedeploy-agent
+    working_directory: ~/ansible-aws-codedeploy-agent
 
     steps:
 
       - checkout:
-          path: ~/aws-codedeploy-agent
+          path: ~/ansible-aws-codedeploy-agent
 
       - run: "npm install @semantic-release/changelog &&
               npm install @semantic-release/git &&
