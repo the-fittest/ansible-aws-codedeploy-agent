@@ -32,7 +32,7 @@
     - '/var/log/aws/codedeploy-agent'
     - '/etc/codedeploy-agent/conf'
 
-- name: Build AWS CodeDeploy Agent
+- name: Create configuration file
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -40,7 +40,6 @@
     group: root
     mode: 0644
   with_items:
-    - { src: 'codedeploy-agent.service.j2', dest: '/etc/systemd/system/codedeploy-agent.service' }
     - { src: 'codedeployagent.yml.j2', dest: '/etc/codedeploy-agent/conf/codedeployagent.yml' }
   notify:
     - "restart codedeploy-agent"
